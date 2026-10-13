@@ -20,14 +20,18 @@ const warnAboutFailedLocalSave = (store, path) => {
 };
 
 const getDebouncedLiveSyncFunction = (store) =>
-  debounce((path) => {
-    if (store.getState().base.get('shouldLiveSync')) {
-      store.dispatch(sync({ shouldSuppressMessages: true, path }));
+  debounce(
+    (path) => {
+      if (store.getState().base.get('shouldLiveSync')) {
+        store.dispatch(sync({ shouldSuppressMessages: true, path }));
+      }
+    },
+    3000,
+    {
+      leading: false,
+      trailing: true,
     }
-  }, 3000, {
-    leading: false,
-    trailing: true,
-  });
+  );
 
 const debouncedLiveSyncFunctions = {};
 
